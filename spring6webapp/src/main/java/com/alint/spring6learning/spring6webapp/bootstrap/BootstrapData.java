@@ -36,27 +36,33 @@ public class BootstrapData implements CommandLineRunner {
         noEJB.setTitle("J2EE Development without EJB");
         noEJB.setIsbn("54757585");
 
+        Publisher publisher = new Publisher();
+        publisher.setPublisherName("My Publisher");
+        publisher.setAddress("123 Main");
+
+
         Author ericSaved = authorRepo.save(eric);
         Author rodSaved = authorRepo.save(rod);
         Book dddSaved = bookRepo.save(ddd);
         Book noEJBSaved = bookRepo.save(noEJB);
+        Publisher publisherSaved = publisherRepo.save(publisher);
 
+
+        dddSaved.setPublisher(publisherSaved);
+        noEJBSaved.setPublisher(publisherSaved);
         ericSaved.getBooks().add(dddSaved);
         rodSaved.getBooks().add(noEJBSaved);
+        dddSaved.getAuthors().add(ericSaved);
+        noEJBSaved.getAuthors().add(rodSaved);
 
         authorRepo.save(ericSaved);
         authorRepo.save(rodSaved);
+        bookRepo.save(dddSaved);
+        bookRepo.save(noEJBSaved);
 
         System.out.println("In Bootstrap");
         System.out.println("Author Count: " + authorRepo.count());
         System.out.println("Book count: " + bookRepo.count());
-
-
-        Publisher publisher = new Publisher();
-        publisher.setPublisherName("My Publisher");
-        publisher.setAddress("123 Main");
-        publisherRepo.save(publisher);
-
         System.out.println("Publisher Count: " + publisherRepo.count());
     }
 }
