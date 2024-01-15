@@ -1,1 +1,1 @@
-"#Git repository for demo projects with Spring Framework 6" 
+#Git repository for demo projects with Spring Framework 6
