@@ -1,12 +1,13 @@
 package com.alint.spring6learning.spring6webapp.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -14,16 +15,16 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Author {
+public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String firstName;
-    private String lastName;
 
-    @ManyToMany
-    @ToString.Exclude
-    private Set<Book> books = new HashSet<>();
+    private String publisherName;
+    private String address;
+    private String city;
+    private String state;
+    private String zip;
 
     @Override
     public final boolean equals(Object o) {
@@ -32,8 +33,8 @@ public class Author {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Author author = (Author) o;
-        return getId() != null && Objects.equals(getId(), author.getId());
+        Publisher publisher = (Publisher) o;
+        return getId() != null && Objects.equals(getId(), publisher.getId());
     }
 
     @Override
