@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,25 +13,19 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Book {
-
+public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String title;
-    private String isbn;
 
+    private String publisherName;
+    private String address;
+    private String city;
+    private String state;
+    private String zip;
 
-
-    @ManyToMany
-    @JoinTable(name = "author_book", joinColumns = @JoinColumn(name="book_id"),
-            inverseJoinColumns = @JoinColumn(name="author_id"))
-    @ToString.Exclude
-    private Set<Author> authors = new HashSet<>();
-
-
-    @ManyToOne
-    private Publisher publisher;
+    @OneToMany(mappedBy = "publisher")
+    private Set<Book> books;
 
     @Override
     public final boolean equals(Object o) {
@@ -41,8 +34,8 @@ public class Book {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Book book = (Book) o;
-        return getId() != null && Objects.equals(getId(), book.getId());
+        Publisher publisher = (Publisher) o;
+        return getId() != null && Objects.equals(getId(), publisher.getId());
     }
 
     @Override
